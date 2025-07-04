@@ -1,4 +1,7 @@
 from Grafo import Grafo
+from fpdf import FPDF
+import pandas as pd
+import time
 
 class Lista03:
     def contaCoresVizinhos(vertices,vizinhanca):
@@ -55,9 +58,10 @@ class Lista03:
             sequencias = string_instancias.read().split(sep='\n')
             i = 0
             contador = 0
-            n_iso = []
+            saida = {}
+            
             while i < len(sequencias):
-
+                start_time = time.time()
                 tamanho_par = int(sequencias[i])
                 contador+=1
                 i+=1
@@ -77,10 +81,35 @@ class Lista03:
                 Lista03.coloreGrafo(G2)
                 cores_g2 = Lista03.contaCores(G2.vertices)
                 
+                iso = '+++'
                 if cores_g1 != cores_g2:
-                    n_iso.append(contador)
+                    iso = '---'
+                end_time = time.time()
+                cpu_time = round(end_time - start_time,6)
+                saida[contador] = {'tamanho':tamanho_par,'isomorfo':iso, 'cpu_time': cpu_time}
                 i+=2*(tamanho_par+1)
-            return n_iso 
+
+                df_saida = pd.DataFrame.from_dict(saida,orient='index')
+                df_tex = df_saida.to_markdown(tablefmt="grid")
+                
+                texto_final = (
+                    "Lista 03\n" + 
+                    "Diego Vinicius da Silva \n" +
+                    "RA11201720298\n\n"
+
+                    "Link do repositório: https://github.com/DiegoVinicius023/MatematicaDiscretaII/tree/main \n\n"+
+
+                    f"Saída do código:\n{df_tex}"
+                )
+
+                
+                pdf = FPDF()
+                pdf.add_page()
+                pdf.set_font("Arial", "B", 12)
+                pdf.multi_cell(0, 10, texto_final)
+                pdf.output("Lista03/Lista 03.pdf", "F")
+
+
 
 if __name__ == '__main__':
     print(Lista03.analisaLista())
