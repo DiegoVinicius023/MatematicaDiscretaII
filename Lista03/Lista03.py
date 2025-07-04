@@ -1,6 +1,6 @@
 from Grafo import Grafo
 
-class Lista02:
+class Lista03:
     def contaCoresVizinhos(vertices,vizinhanca):
         cores = {}
         for i in range(len(vizinhanca)):
@@ -37,10 +37,10 @@ class Lista02:
 
                             if cor_v1 == cor_v2:
                                 v1_vizinhos = grafo.matriz[v1]
-                                cores_v1_vizinhos = Lista02.contaCoresVizinhos(grafo.vertices,v1_vizinhos)
+                                cores_v1_vizinhos = Lista03.contaCoresVizinhos(grafo.vertices,v1_vizinhos)
 
                                 v2_vizinhos = grafo.matriz[v2]
-                                cores_v2_vizinhos = Lista02.contaCoresVizinhos(grafo.vertices,v2_vizinhos)
+                                cores_v2_vizinhos = Lista03.contaCoresVizinhos(grafo.vertices,v2_vizinhos)
 
                                 if cores_v1_vizinhos != cores_v2_vizinhos:
                                     novo_vertices[v2] += 1
@@ -51,7 +51,7 @@ class Lista02:
                 grafo.vertices = novo_vertices
 
     def analisaLista():
-        with open('Lista02/Instâncias_isomorfismo.txt') as string_instancias:
+        with open('Lista03/Instâncias_isomorfismo.txt') as string_instancias:
             sequencias = string_instancias.read().split(sep='\n')
             i = 0
             contador = 0
@@ -70,12 +70,12 @@ class Lista02:
                     par[1].append(linha_par_1)
 
                 G1 = Grafo(tamanho_par,par[0])
-                Lista02.coloreGrafo(G1)
-                cores_g1 = Lista02.contaCores(G1.vertices)
+                Lista03.coloreGrafo(G1)
+                cores_g1 = Lista03.contaCores(G1.vertices)
 
                 G2 = Grafo(tamanho_par,par[1])
-                Lista02.coloreGrafo(G2)
-                cores_g2 = Lista02.contaCores(G2.vertices)
+                Lista03.coloreGrafo(G2)
+                cores_g2 = Lista03.contaCores(G2.vertices)
                 
                 if cores_g1 != cores_g2:
                     n_iso.append(contador)
@@ -83,4 +83,4 @@ class Lista02:
             return n_iso 
 
 if __name__ == '__main__':
-    print(Lista02.analisaLista())
+    print(Lista03.analisaLista())
